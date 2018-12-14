@@ -1,0 +1,20 @@
+
+***** ✅ emacs
+****** ✅ spacemacs config
+***** ✅ chrome tabbing keybinds
+***** ✅ hyperswitcher
+***** ✅ npm
+****** ✅ docsify (is that npm?)
+***** ✅ mouse acceleration util
+***** ✅ lock button on touch bar
+***** ✅ amethyst
+***** ✅ brew things [4/4]
+****** ✅ silver searcher
+****** ✅ jq
+***** ✅ intellij [2/2]
+****** ✅ settings from personal repo
+***** ✴️ search engines [0/3]
+****** ✴️ w
+****** ✴️ is
+****** ✴️ pkg
+backup scripts
