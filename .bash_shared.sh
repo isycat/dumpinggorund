@@ -3,6 +3,8 @@ export PS1='\w: ' # terminal format
 
 alias reload="source ~/.bashrc"
 
+alias simquote="shuf -n 1 ~/w/dumpinggorund/.simquotes.txt"
+
 # git
 alias g='git'
 alias gd='git diff'
