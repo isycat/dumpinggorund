@@ -1,6 +1,7 @@
 export PATH="~/bin:$PATH"
 export PS1='\w: ' # terminal format
 
+alias reload="source ~/.bashrc"
 
 # git
 alias g='git'
