@@ -7,6 +7,8 @@ bind 'set prefer-visible-bell on'
 
 alias b="~/w/dumpinggorund/build.sh"
 
+alias trigga-test="sudo ssh ubuntu@trigga-test.isy.cat -i /e/trigga-test.pem"
+
 function rrggmu {
     var0=`find -L -maxdepth 3 -name .git -type d -prune`
     gitdirs=`dirname $var0`

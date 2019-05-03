@@ -1,13 +1,13 @@
 
 cmd=""
 if [ -f "pom.xml" ]; then
-if [ -e "$1" ]; then
+if [ ! -z "$1" ]; then
 cmd="cmd.exe /c mvn $1";
 else
 cmd="cmd.exe /c mvn clean install";
 fi
 elif [ -f "package.json" ]; then
-if [ -e "$1" ]; then
+if [ ! -z "$1" ]; then
 cmd="npm $1";
 else
 cmd="npm start";
