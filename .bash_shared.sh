@@ -1,5 +1,5 @@
 export PATH="~/bin:$PATH"
-export PS1='\w: ' # terminal format
+export PS1='\e[35m\w\e[39m: ' # terminal format
 
 alias reload="source ~/.bashrc"
 
