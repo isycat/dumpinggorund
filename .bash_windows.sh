@@ -5,6 +5,8 @@ bind 'set show-all-if-ambiguous on'
 bind 'set completion-ignore-case on'
 bind 'set prefer-visible-bell on'
 
+alias run="cmd.exe /c"
+
 alias b="~/w/dumpinggorund/build.sh"
 
 alias trigga-test="sudo ssh ubuntu@trigga-test.isy.cat -i /e/trigga-test.pem"
@@ -29,3 +31,4 @@ function _function_ws {
 
 alias ws=_function_ws
 
+cd ~
