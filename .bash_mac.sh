@@ -7,6 +7,8 @@ ln -sfn $(/usr/libexec/java_home) ~/java_home
 
 alias code='/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code'
 
+eval $(thefuck --alias ffs)
+
 function nozzz() {
     let "dur = 60 * 60 * $1"
     echo "no z's for $dur seconds"
