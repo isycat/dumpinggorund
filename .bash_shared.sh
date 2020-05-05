@@ -19,7 +19,7 @@ alias piratequote="shuf -n 1 ~/w/dumpinggorund/.piratequotes.txt"
 alias lp='lpass'
 
 function lpp() {
-    lpass show $1 | ag 'Password: \K.+' -o
+    lpass show $1 | ag 'Password: \K.+' -o | less
 }
 
 if [ $ITERM_SESSION_ID ]; then
