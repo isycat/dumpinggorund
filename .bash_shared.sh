@@ -3,7 +3,8 @@ export PS1='\[\e[35m\]\w\[\e[39m\]: ' # terminal format
 export prompt=$'%{\e[35m%}%~%{\e[39m%}: '
 
 alias ll='ls -l'
-alias la='ls -a'
+alias la='/bin/ls -a'
+alias lls='/bin/ls'
 function ls() {
     /bin/ls $@ -d (*|.*)
 }
