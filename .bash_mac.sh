@@ -1,5 +1,6 @@
 ## MAC
 export PATH="~/Library/Python/2.7/bin:$PATH"
+export PATH="/opt/apache-maven/bin:$PATH"
 
 alias editconfig='open -a "Sublime Text" ~/.bash_profile'
 alias reload='source ~/.bash_profile'
