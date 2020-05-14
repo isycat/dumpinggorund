@@ -6,6 +6,7 @@ alias editconfig='open -a "Sublime Text" ~/.bash_profile'
 alias reload='source ~/.bash_profile'
 ln -sfn $(/usr/libexec/java_home) ~/java_home
 
+alias b="~/w/dumpinggorund/build.sh"
 alias code='/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code'
 
 eval $(thefuck --alias ffs)
