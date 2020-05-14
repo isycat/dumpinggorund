@@ -7,7 +7,7 @@ bind 'set prefer-visible-bell on'
 
 alias run="cmd.exe /c"
 
-alias b="~/w/dumpinggorund/build.sh"
+alias b="~/w/dumpinggorund/build_windows.sh"
 
 alias trigga-test="sudo ssh ubuntu@trigga-test.isy.cat -i /e/trigga-test.pem"
 
