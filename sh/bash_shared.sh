@@ -2,13 +2,6 @@ export PATH="~/bin:$PATH"
 export PS1='\[\e[35m\]\w\[\e[39m\]: ' # terminal format
 export prompt=$'%{\e[35m%}%~%{\e[39m%}: '
 
-alias ll='ls -l'
-alias la='/bin/ls -a'
-alias lls='/bin/ls'
-function ls() {
-    /bin/ls $@ -d (*|.*)
-}
-
 export CLICOLOR=1
 export LESS=r
 
@@ -86,6 +79,7 @@ function allStatus() {
 	done
 }
 alias gsa=allStatus
+alias git-token='lpp github-token-general'
 # --------------------------------------------------------------------------------
 
 function cf() {

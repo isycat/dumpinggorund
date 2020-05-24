@@ -12,6 +12,13 @@ alias code='/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/co
 
 eval $(thefuck --alias ffs)
 
+alias ll='ls -l'
+alias la='/bin/ls -a'
+alias lls='/bin/ls'
+function ls() {
+    /bin/ls $@ -d (*|.*)
+}
+
 function nozzz() {
     let "dur = 60 * 60 * $1"
     echo "no z's for $dur seconds"
