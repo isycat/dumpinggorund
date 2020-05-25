@@ -1,10 +1,15 @@
 ## MAC
-export PATH="~/Library/Python/2.7/bin:$PATH"
-export PATH="/opt/apache-maven/bin:$PATH"
+function add-to-path() {
+    if [ -d "$1" ] && [[ ":$PATH:" != *":$1:"* ]]; then
+        PATH="$1${PATH:+":$PATH"}"
+    fi
+}
+add-to-path "~/Library/Python/2.7/bin"
+add-to-path "/opt/apache-maven/bin"
 export GROOVY_HOME=/usr/local/opt/groovy/libexec
 
 alias editconfig='open -a "Sublime Text" ~/.bash_profile'
-alias reload='source ~/.bash_profile'
+alias reload='source ~/.zshrc'
 ln -sfn $(/usr/libexec/java_home) ~/java_home
 
 alias b="~/w/dumpinggorund/sh/build_mac.sh"
@@ -50,4 +55,4 @@ alias sublime='open -a "Sublime Text"'
 alias dif='/Applications/IntelliJ\ IDEA.app/Contents/MacOS/idea diff'
 
 ## ------------------------------------------------------------
-export PATH=/usr/local/mysql/bin:$PATH
+add-to-path "/usr/local/mysql/bin"

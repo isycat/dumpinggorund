@@ -1,11 +1,29 @@
-export PATH="~/bin:$PATH"
+add-to-path() {
+    if [ -d "$1" ] && [[ ":$PATH:" != *":$1:"* ]]; then
+        PATH="${PATH:+"$PATH:"}$1"
+    fi
+}
+function add-to-path-end() {
+    if [ -d "$1" ] && [[ ":$PATH:" != *":$1:"* ]]; then
+        PATH="${PATH:+"$PATH:"}$1"
+    fi
+}
+add-to-path "~/bin"
 export PS1='\[\e[35m\]\w\[\e[39m\]: ' # terminal format
 export prompt=$'%{\e[35m%}%~%{\e[39m%}: '
-
 export CLICOLOR=1
 export LESS=r
 
 alias reload="source ~/.bashrc"
+
+function getBinDir() {
+    script_dir=$(dirname $1)
+    if [ $script_dir = '.' ]; then
+        script_dir="$(pwd)"
+    fi
+    echo "$script_dir/../bin"
+}
+add-to-path "$(getBinDir $0)"
 
 alias simquote="shuf -n 1 ~/w/dumpinggorund/.simquotes.txt"
 alias piratequote="shuf -n 1 ~/w/dumpinggorund/.piratequotes.txt"
@@ -23,10 +41,10 @@ fi
 
 function precmd() {
     # sets the tab title to current dir
-	currentDirectory=$(dirs)
-	if [ ${#currentDirectory} -ge 16 ]; then
-		currentDirectory=$(echo $currentDirectory | sed 's!.*/!!')
-	fi
+    currentDirectory=$(dirs)
+    if [ ${#currentDirectory} -ge 16 ]; then
+        currentDirectory=$(echo $currentDirectory | sed 's!.*/!!')
+    fi
     echo -ne "\e]1;$currentDirectory\a"
 }
 
@@ -44,51 +62,45 @@ alias glo='git log --graph --decorate --oneline'
 alias gr='git reset'
 alias restash='git stash; git pull --rebase; git stash pop'
 function restashAllDirectories() {
-	echo "stash-pulling all directories";
-	for d in *
-	do
-		cd $d;
-		echo "---- $d - Stash > Rebase > Pop ----";
-		git stash clear;
-		git stash;
-		git pull --rebase;
-		git stash pop;
-		cd ..;
-	done
+    echo "stash-pulling all directories";
+    for d in *
+    do
+        cd $d;
+        echo "---- $d - Stash > Rebase > Pop ----";
+        git stash clear;
+        git stash;
+        git pull --rebase;
+        git stash pop;
+        cd ..;
+    done
 }
 alias restashall=restashAllDirectories
 function fetchAllDirectories() {
-	echo "stash-pulling all directories";
-	for d in *
-	do
-		cd $d;
-		echo "---- $d - Fetching... ----";
-		git fetch;
-		cd ..;
-	done
+    echo "stash-pulling all directories";
+    for d in *
+    do
+        cd $d;
+        echo "---- $d - Fetching... ----";
+        git fetch;
+        cd ..;
+    done
 }
 alias fetchall=fetchAllDirectories
 function allStatus() {
-	echo "fetching all directories";
-	for d in *
-	do
-		cd $d;
-		echo "---- $d ----";
-		git status;
-		cd ..;
-	done
+    echo "fetching all directories";
+    for d in *
+    do
+        cd $d;
+        echo "---- $d ----";
+        git status;
+        cd ..;
+    done
 }
 alias gsa=allStatus
 alias git-token='lpp github-token-general'
 # --------------------------------------------------------------------------------
 
 function cf() {
-   printf "protocol=https\nhost=github.com\nusername=$(lpass show --password github-token-general)\npassword=$(lpass show --password github-token-general)\n" | git credential fill >> /dev/null
-  echo "git creds updated"
+    printf "protocol=https\nhost=github.com\nusername=$(lpass show --password github-token-general)\npassword=$(lpass show --password github-token-general)\n" | git credential fill >> /dev/null
+    echo "git creds updated"
 }
-
-
-
-
-
-
