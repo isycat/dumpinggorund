@@ -1,2 +1,53 @@
 #! /usr/bin/env python3
-print("coming soon")
+import sys
+import os
+import re
+from typing import Any, List, IO, Iterator
+
+def main(args: List[str]):
+    if not os.path.isfile("Makefile"):
+        print("No makefile found")
+        exit(1)
+    command: str = getCommand("Makefile") if len(args) < 2 else args[1]
+    print("---")
+    os.system("make " + command)
+
+def getCommand(makefile_path) -> str:
+    commands: List[str] = getOptions(makefile_path)
+    selection: str = getch()
+    if selection.isnumeric():
+        selectedIndex: int = int(selection)
+        if selectedIndex == 0:
+            exit(0)
+        elif (selectedIndex < 1 or selectedIndex > len(commands)):
+            print("Invalid index: " + str(selectedIndex))
+            exit(1)
+        return commands[selectedIndex - 1]
+    print("Invalid selection. Please use a nubmer from the list.")
+    exit(1)
+
+def getOptions(makefile_path) -> List[str]:
+    makefile: IO[Any] = open(makefile_path)
+    commands: List[str] = []
+    for it in makefile.read().split("\n"):
+        commands.extend(map(lambda s: s[:-1], re.findall(r"^[A-Za-z0-9-_]+:", it)))
+    print("0: exit")
+    for i in range(len(commands)):
+        print(str(i + 1) + ": " + commands[i])
+    return commands
+
+def getch():
+    import termios
+    import sys, tty
+    def _getch():
+        fd = sys.stdin.fileno()
+        old_settings = termios.tcgetattr(fd)
+        try:
+            tty.setraw(fd)
+            ch = sys.stdin.read(1)
+        finally:
+            termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
+        return ch
+    return _getch()
+
+main(sys.argv)

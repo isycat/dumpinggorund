@@ -1,4 +1,4 @@
-add-to-path() {
+function add-to-path() {
     if [ -d "$1" ] && [[ ":$PATH:" != *":$1:"* ]]; then
         PATH="$1${PATH:+":$PATH"}"
     fi
@@ -16,12 +16,16 @@ export LESS=r
 
 alias reload="source ~/.bashrc"
 
-function getBinDir() {
+function getScriptDir() {
     script_dir=$(dirname $1)
     if [ $script_dir = '.' ]; then
         script_dir="$(pwd)"
     fi
-    echo "$script_dir/../bin"
+    echo "$script_dir"
+}
+alias get-script-dir=getScriptDir
+function getBinDir() {
+    echo "$(getScriptDir $@)/../bin"
 }
 add-to-path "$(getBinDir $0)"
 
