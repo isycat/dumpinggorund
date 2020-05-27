@@ -33,7 +33,6 @@ alias simquote="shuf -n 1 ~/w/dumpinggorund/.simquotes.txt"
 alias piratequote="shuf -n 1 ~/w/dumpinggorund/.piratequotes.txt"
 
 alias lp='lpass'
-
 function lpp() {
     lpass show $1 | ag 'Password: \K.+' -o | less
 }
@@ -41,7 +40,6 @@ function lpp() {
 if [ $ITERM_SESSION_ID ]; then
   export PROMPT_COMMAND='echo -ne "\033];${PWD##*/}\007"; ':"$PROMPT_COMMAND";
 fi
-
 
 function precmd() {
     # sets the tab title to current dir
@@ -51,6 +49,19 @@ function precmd() {
     fi
     echo -ne "\e]1;$currentDirectory\a"
 }
+
+if [ "$SHELL" = "$(which zsh)" ]; then
+    DISABLE_UPDATE_PROMPT=true
+    setopt extendedglob
+    zstyle ':completion:*' completer _complete _ignored _approximate
+    autoload -Uz compinit
+    for dump in ~/.zcompdump(N.mh+24); do
+        compinit
+    done
+    unsetopt EXTENDEDGLOB
+    compinit -C
+else
+fi
 
 # git
 alias g='git'
@@ -102,6 +113,13 @@ function allStatus() {
 }
 alias gsa=allStatus
 alias git-token='lpp github-token-general'
+function new-pr() {
+    repo=$(git config --get remote.origin.url | sed 's/.*\/\([^ ]*\/[^.]*\).*/\1/')
+    branch=$(git symbolic-ref --short HEAD)
+    new_url="https://github.com/$repo/pull/new/$branch"
+    python -m webbrowser $new_url
+}
+alias pr=new-pr
 # --------------------------------------------------------------------------------
 
 function cf() {

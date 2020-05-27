@@ -10,12 +10,16 @@ export GROOVY_HOME=/usr/local/opt/groovy/libexec
 
 alias editconfig='open -a "Sublime Text" ~/.bash_profile'
 alias reload='source ~/.zshrc'
-ln -sfn $(/usr/libexec/java_home) ~/java_home
+( ln -sfn $(/usr/libexec/java_home) ~/java_home &)  &> /dev/null
 
 alias b="~/w/dumpinggorund/sh/build_mac.sh"
 alias code='/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code'
 
-eval $(thefuck --alias ffs)
+if command -v thefuck >/dev/null 2>&1; then
+  ffs() {
+    eval "$(thefuck --alias ffs)" && ffs
+  }
+fi
 
 alias ll='ls -l'
 alias la='/bin/ls -a'
