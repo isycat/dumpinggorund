@@ -96,8 +96,9 @@ function lp-trigger-check() {
         fi
     fi
 }
-PS1+="\$(lp-trigger-check)"
-prompt+="\$(lp-trigger-check)"
+# trigger on prompt
+# PS1+="\$(lp-trigger-check)"
+# prompt+="\$(lp-trigger-check)"
 # -------------------------------------------
 
 
