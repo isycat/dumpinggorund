@@ -9,6 +9,7 @@ function add-to-path-end() {
     fi
 }
 add-to-path "~/bin"
+
 export PS1='\[\e[35m\]\w\[\e[39m\]: ' # terminal format
 export prompt=$'%{\e[35m%}%~%{\e[39m%}: '
 export CLICOLOR=1
@@ -33,14 +34,7 @@ function getBinDir() {
 }
 add-to-path "$(getBinDir $0)"
 
-alias simquote="shuf -n 1 ~/w/dumpinggorund/.simquotes.txt"
-alias piratequote="shuf -n 1 ~/w/dumpinggorund/.piratequotes.txt"
-
-alias lp='lpass'
-function lpp() {
-    lpass show $1 | ag 'Password: \K.+' -o | less
-}
-
+# general shell -----------------------------
 if [ $ITERM_SESSION_ID ]; then
   export PROMPT_COMMAND='echo -ne "\033];${PWD##*/}\007"; ':"$PROMPT_COMMAND";
 fi
@@ -66,6 +60,46 @@ if [ "$SHELL" = "$(which zsh)" ]; then
     unsetopt EXTENDEDGLOB
     compinit -C
 fi
+# -------------------------------------------
+
+
+# most important ----------------------------
+alias simquote="shuf -n 1 ~/w/dumpinggorund/.simquotes.txt"
+alias piratequote="shuf -n 1 ~/w/dumpinggorund/.piratequotes.txt"
+# -------------------------------------------
+
+
+# lastpass ----------------------------------
+alias lp='lpass'
+function lpp() {
+    lpass show $1 | ag 'Password: \K.+' -o | less
+}
+function lp-login() {
+    touch /tmp/LPASS_TRIGGER
+    read -p "Laspass login: " lpassuser < /dev/tty > /dev/tty
+    if [ -z "$lpassuser" ]; then
+        exit
+    fi
+    lpass login $lpassuser #> /dev/null
+    wait
+}
+function lp-trigger-check() {
+    if [ ! -f /tmp/LPASS_TRIGGER ]; then
+        lpass ls > /dev/null 2>&1
+        if [ $? -ne 0 ]; then
+            lp-login
+        fi
+    elif [ $(find /tmp/LPASS_TRIGGER -mmin +720 -print) ]; then
+        lpass ls > /dev/null 2>&1
+        if [ $? -ne 0 ]; then
+            lp-login
+        fi
+    fi
+}
+PS1+="\$(lp-trigger-check)"
+prompt+="\$(lp-trigger-check)"
+# -------------------------------------------
+
 
 # git
 alias g='git'
@@ -116,7 +150,9 @@ function allStatus() {
     done
 }
 alias gsa=allStatus
-alias git-token='lpp github-token-general'
+function git-token() {
+    lpp github-token-general
+}
 function new-pr() {
     repo=$(git config --get remote.origin.url | sed 's/.*\/\([^ ]*\/[^.]*\).*/\1/')
     branch=$(git symbolic-ref --short HEAD)
@@ -125,8 +161,3 @@ function new-pr() {
 }
 alias pr=new-pr
 # --------------------------------------------------------------------------------
-
-function cf() {
-    printf "protocol=https\nhost=github.com\nusername=$(lpass show --password github-token-general)\npassword=$(lpass show --password github-token-general)\n" | git credential fill >> /dev/null
-    echo "git creds updated"
-}
