@@ -17,11 +17,15 @@ export LESS=r
 alias reload="source ~/.bashrc"
 
 function getScriptDir() {
-    script_dir=$(dirname $1)
-    if [ $script_dir = '.' ]; then
-        script_dir="$(pwd)"
+    if [ "$0" = "-bash" ]; then
+        echo "$(realpath "$(dirname "$BASH_SOURCE")")"
+    else
+        script_dir=$(dirname $1)
+        if [ $script_dir = '.' ]; then
+            script_dir="$(pwd)"
+        fi
+        echo "$script_dir"
     fi
-    echo "$script_dir"
 }
 alias get-script-dir=getScriptDir
 function getBinDir() {
@@ -51,16 +55,16 @@ function precmd() {
 }
 
 if [ "$SHELL" = "$(which zsh)" ]; then
+    echo "zsh!"
     DISABLE_UPDATE_PROMPT=true
     setopt extendedglob
     zstyle ':completion:*' completer _complete _ignored _approximate
     autoload -Uz compinit
-    for dump in ~/.zcompdump(N.mh+24); do
-        compinit
-    done
+    # for dump in ~/.zcompdump(N.mh+24); do
+    #     compinit
+    # done
     unsetopt EXTENDEDGLOB
     compinit -C
-else
 fi
 
 # git
