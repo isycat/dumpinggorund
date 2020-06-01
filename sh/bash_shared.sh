@@ -49,7 +49,6 @@ function precmd() {
 }
 
 if [ "$SHELL" = "$(which zsh)" ]; then
-    echo "zsh!"
     DISABLE_UPDATE_PROMPT=true
     setopt extendedglob
     zstyle ':completion:*' completer _complete _ignored _approximate
