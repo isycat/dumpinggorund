@@ -75,10 +75,8 @@ function lpp() {
 }
 function lp-login() {
     touch /tmp/LPASS_TRIGGER
-    read -p "Laspass login: " lpassuser < /dev/tty > /dev/tty
-    if [ -z "$lpassuser" ]; then
-        exit
-    fi
+    printf "Lastpass login: "
+    read lpassuser < /dev/tty > /dev/tty
     lpass login $lpassuser #> /dev/null
     wait
 }

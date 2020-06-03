@@ -10,7 +10,7 @@ function gsdir() {
     fi
 }
 
-git config --global credential.lastpass "credential-git-lpass" &&
+git config --global credential.lastpass "git-credential-lastpass" &&
 git config --global core.excludesfile $(gsdir $0)/git/ignore &&
 git config --global credential.helper lastpass &&
 
