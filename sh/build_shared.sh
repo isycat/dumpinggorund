@@ -1,18 +1,16 @@
-cmd=""
 mvn_default="mvn"
 npm_default="npm"
+platformio_default="platformio"
+
+cmd=""
+
 if [ -f "pom.xml" ]; then
-    if [ ! -z "$1" ]; then
-        cmd="${MVN_CMD-$mvn_default} $1"
-    else
-        cmd="${MVN_CMD-$mvn_default} clean install"
-    fi
+    cmd="${MVN_CMD-$mvn_default} ${1-clean install}"
 elif [ -f "package.json" ]; then
-    if [ ! -z "$1" ]; then
-        cmd="${NPM_CMD-$npm_default} $1"
-    else
-        cmd="${NPM_CMD-$npm_default} start"
-    fi
+    cmd="${NPM_CMD-$npm_default} ${1-start}"
+elif [ -f "platformio.ini" ]; then
+    cmd="${PLATFORMIO_CMD-$platformio_default} ${1-run}"
+# last check...
 elif [ -f "Makefile" ]; then
     mk $1
 else

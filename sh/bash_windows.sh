@@ -7,7 +7,7 @@ bind 'set prefer-visible-bell on'
 
 alias run="cmd.exe /c"
 
-alias b="~/w/dumpinggorund/build_windows.sh"
+alias b="~/w/dumpinggorund/sh/build_windows.sh"
 
 alias trigga-test="sudo ssh ubuntu@trigga-test.isy.cat -i /e/trigga-test.pem"
 
@@ -31,4 +31,4 @@ function _function_ws {
 
 alias ws=_function_ws
 
-cd ~
+# cd ~
