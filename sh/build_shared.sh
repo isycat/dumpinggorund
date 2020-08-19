@@ -2,7 +2,7 @@ mvn_default="mvn"
 npm_default="npm"
 platformio_default="platformio"
 
-function buildstuff() {
+function auto_build() {
     rp="./"
     working_path=${CUR_BUILD_PATH-$rp}
     cmd=""
@@ -14,13 +14,13 @@ function buildstuff() {
         cmd="${PLATFORMIO_CMD-$platformio_default} ${1-run}"
     # last checks...
     else
-        groot=`git rev-parse --show-cdup`
-        if [ "$working_path" == "$groot" ]; then
+        git_root=`git rev-parse --show-cdup`
+        if [ "$working_path" == "$git_root" ]; then
             # Nothing found in root. Check for Makefiles
             if [ -f "$rp/Makefile" ]; then
                 # Makefile found in current dir
                 mk $1
-            elif [ -f "$groot/Makefile" ]; then
+            elif [ -f "$git_root/Makefile" ]; then
                 # Makefile found in root dir
                 echo "Root Makefile:"
                 mk $1
@@ -29,7 +29,7 @@ function buildstuff() {
                 exit 1
             fi
         else
-            CUR_BUILD_PATH=$groot buildstuff $@
+            CUR_BUILD_PATH=$git_root auto_build $@
         fi
         exit 0
     fi
@@ -39,4 +39,4 @@ function buildstuff() {
     (cd $working_path; $cmd)
 }
 
-buildstuff $@
+auto_build $@
