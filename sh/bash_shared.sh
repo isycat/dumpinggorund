@@ -106,7 +106,7 @@ alias gc='git commit'
 alias amend='git commit --amend'
 alias gs='git status'
 alias ga='git add'
-alias gaa='git add *; git status'
+alias gaa='git add -A; git status'
 alias gch='git checkout'
 alias gl='git log --graph --decorate'
 alias glo='git log --graph --decorate --oneline'
@@ -159,3 +159,9 @@ function new-pr() {
 }
 alias pr=new-pr
 # --------------------------------------------------------------------------------
+
+
+# kube
+alias k=kubectl
+alias kx=kubectx
+# -------------------------------------------
