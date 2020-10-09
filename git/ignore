@@ -1,7 +1,6 @@
 target
 build
 dist
-lib
 out
 *.iml
 .*
