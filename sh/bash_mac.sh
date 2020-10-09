@@ -60,3 +60,22 @@ alias dif='/Applications/IntelliJ\ IDEA.app/Contents/MacOS/idea diff'
 
 ## ------------------------------------------------------------
 add-to-path "/usr/local/mysql/bin"
+
+function pretty-log() {
+    while read -r line; do
+        if [[ $line != \{* ]]; then
+            echo -n "$line"
+        else
+            log=$(echo "$line" | jq '(.instant.epochSecond | strftime("%Y-%m-%dT%H:%M:%S")) as $k | .message as $m | "\($k): \($m)"' 2> /dev/null)
+        fi
+        if [[ $? -eq 0 ]]; then
+            echo "$log" | sed 's/^"\(.*\)"$/\1/'
+        else
+            echo "$line"
+        fi
+    done < /dev/stdin
+}
+
+function klog() {
+    kubectl logs $@ | pretty-log | less
+}
