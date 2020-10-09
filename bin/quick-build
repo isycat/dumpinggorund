@@ -1,0 +1,7 @@
+hash=(`tar cf - src | sha1sum`);
+if [[ ! -f ".buildhash" || "$hash" != "$(cat .buildhash)" ]]; then
+    $@ &&
+    echo "$hash" > .buildhash
+else
+    echo "Build is up to date";
+fi
