@@ -4,7 +4,8 @@ function add-to-path() {
         PATH="$1${PATH:+":$PATH"}"
     fi
 }
-add-to-path "~/Library/Python/2.7/bin"
+add-to-path "$HOME/Library/Python/2.7/bin"
+add-to-path "$HOME/Library/Python/3.7/bin/"
 add-to-path "/opt/apache-maven/bin"
 export GROOVY_HOME=/usr/local/opt/groovy/libexec
 
