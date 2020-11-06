@@ -162,6 +162,8 @@ alias pr=new-pr
 
 
 # kube
-alias k=kubectl
+function k() {
+    kubectl $@ | less
+}
 alias kx=kubectx
 # -------------------------------------------
