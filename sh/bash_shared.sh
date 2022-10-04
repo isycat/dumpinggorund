@@ -69,14 +69,22 @@ alias piratequote="shuf -n 1 ~/w/dumpinggorund/.piratequotes.txt"
 
 
 # lastpass ----------------------------------
+export LPASS_AGENT_TIMEOUT=14400
 alias lp='lpass'
 function lpp() {
     lpass show $1 | ag 'Password: \K.+' -o | less
 }
 function lp-login() {
     touch /tmp/LPASS_TRIGGER
-    printf "Lastpass login: "
-    read lpassuser < /dev/tty > /dev/tty
+
+    if [[ -z "${LP_LOCAL_USER}" ]]; then
+        printf "Lastpass login: ";
+        read lpassuser < /dev/tty > /dev/tty;
+    else
+        echo "logging on as configured user"
+        lpassuser="${LP_LOCAL_USER}"
+    fi
+
     lpass login $lpassuser #> /dev/null
     wait
 }
